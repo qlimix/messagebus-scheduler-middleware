@@ -2,12 +2,12 @@
 
 namespace Qlimix\MessageBus\Message;
 
-use Qlimix\Serializable\GetNameTrait;
-use Qlimix\Serializable\SerializableInterface;
+use Qlimix\Serialize\GetClassNameTrait;
+use Qlimix\Serialize\SerializableInterface;
 
-final class ScheduledMessage implements SerializableInterface
+final class ScheduledMessage
 {
-    use GetNameTrait;
+    use GetClassNameTrait;
 
     /** @var string */
     private $id;
@@ -36,28 +36,6 @@ final class ScheduledMessage implements SerializableInterface
     public function getId(): string
     {
         return $this->id;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function serialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->getName(),
-            'scheduledAt' => $this->scheduledAt->format(DATE_ATOM),
-            'message' => $this->message->serialize(),
-            'messageName' => $this->message->getName()
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function deserialize(array $data): SerializableInterface
-    {
-        return new self($data['id'], $data['name']::deserialize($data['message']), $data['scheduledAt']);
     }
 
     /**

@@ -17,10 +17,8 @@
     },
     "require-dev": {
         "qlimix/messagebus": "dev-master",
-        "qlimix/serializable": "dev-master",
-        "qlimix/queue": "dev-master",
-        "qlimix/queue-scheduler": "dev-master",
-        "qlimix/uuid": "dev-master"
+        "qlimix/serialize": "dev-master",
+        "qlimix/message-scheduler": "dev-master"
     },
     "config": {
         "sort-packages": true
@@ -34,19 +32,11 @@
         },
         {
             "type": "vcs",
-            "url":  "git@bitbucket.org:qlimix/queue.git"
+            "url":  "git@bitbucket.org:qlimix/serialize.git"
         },
         {
             "type": "vcs",
-            "url":  "git@bitbucket.org:qlimix/uuid.git"
-        },
-        {
-            "type": "vcs",
-            "url":  "git@bitbucket.org:qlimix/serializable.git"
-        },
-        {
-            "type": "vcs",
-            "url":  "git@bitbucket.org:qlimix/queue-scheduler.git"
+            "url":  "git@bitbucket.org:qlimix/message-scheduler.git"
         }
     ]
 }
