@@ -1,42 +1,40 @@
 {
     "name": "qlimix/messagebus-scheduler-middleware",
-    "type": "package",
-    "license": "LGPL-3.0-only",
+    "type": "library",
+    "description": "Schedule messages via the messagebus with this middleware",
+    "license": "MIT",
+    "keywords": [
+        "middleware",
+        "messagebus",
+        "schedule",
+        "scheduler"
+    ],
     "authors": [
         {
             "name": "frank",
             "email": "frank@qlimix.net"
         }
     ],
+    "require": {
+        "php": ">=7.2",
+        "qlimix/message-scheduler": "^1.0",
+        "qlimix/messagebus": "^1.0",
+        "qlimix/serializable": "^1.0"
+    },
     "autoload": {
         "psr-4": {
             "Qlimix\\MessageBus\\": "src/"
         }
     },
-    "require": {
-    },
-    "require-dev": {
-        "qlimix/messagebus": "dev-master",
-        "qlimix/serialize": "dev-master",
-        "qlimix/message-scheduler": "dev-master"
+    "autoload-dev": {
+        "psr-4": {
+            "Qlimix\\Tests\\MessageBus\\": "tests/"
+        }
     },
     "config": {
         "sort-packages": true
     },
-    "suggest": {
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@bitbucket.org:qlimix/messagebus.git"
-        },
-        {
-            "type": "vcs",
-            "url":  "git@bitbucket.org:qlimix/serialize.git"
-        },
-        {
-            "type": "vcs",
-            "url":  "git@bitbucket.org:qlimix/message-scheduler.git"
-        }
-    ]
+    "require-dev": {
+        "qlimix/code-standard": "^1.0"
+    }
 }

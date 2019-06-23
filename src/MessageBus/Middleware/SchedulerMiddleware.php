@@ -2,9 +2,11 @@
 
 namespace Qlimix\MessageBus\MessageBus\Middleware;
 
+use DateInterval;
+use DateTimeImmutable;
 use Qlimix\Message\Scheduler\SchedulerInterface;
-use Qlimix\MessageBus\Message\ScheduledMessage;
 use Qlimix\MessageBus\MessageBus\Middleware\Exception\MiddlewareException;
+use Qlimix\Serializable\SerializableInterface;
 use Throwable;
 
 final class SchedulerMiddleware implements MiddlewareInterface
@@ -12,26 +14,29 @@ final class SchedulerMiddleware implements MiddlewareInterface
     /** @var SchedulerInterface */
     private $scheduler;
 
-    public function __construct(SchedulerInterface $scheduler)
+    /** @var DateInterval */
+    private $interval;
+
+    public function __construct(SchedulerInterface $scheduler, DateInterval $interval)
     {
         $this->scheduler = $scheduler;
+        $this->interval = $interval;
     }
 
     /**
      * @inheritDoc
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
      */
     public function handle($message, MiddlewareHandlerInterface $handler): void
     {
-        if ($message instanceof ScheduledMessage) {
-            try {
-                $this->scheduler->schedule($message->getMessage(), $message->getScheduledAt());
-            } catch (Throwable $exception) {
-                throw new MiddlewareException('Could not handle message asynchronous', 0, $exception);
-            }
-
-            return;
+        if (!$message instanceof SerializableInterface) {
+            throw new MiddlewareException('Message need to implement serializable');
         }
 
-        $handler->next($message, $handler);
+        try {
+            $this->scheduler->schedule($message, (new DateTimeImmutable())->add($this->interval));
+        } catch (Throwable $exception) {
+            throw new MiddlewareException('Could not schedule message', 0, $exception);
+        }
     }
 }
